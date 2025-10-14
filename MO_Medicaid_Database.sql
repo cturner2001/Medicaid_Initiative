@@ -70,7 +70,7 @@ CREATE TABLE Unemployment (
 CREATE TABLE Application (
 	ApplicationID        INT             PRIMARY KEY,
 	UserID               INT,
-	SubmissionDate       DATETIME,
+	SubmissionDate       DATE,
 	Status               VARCHAR(20),
 	CaseWorkerID         INT,
 	MedicaidNumber       VARCHAR(20),
