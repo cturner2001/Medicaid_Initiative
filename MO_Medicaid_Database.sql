@@ -5,6 +5,7 @@
 -- Updated SumbittedDocuments
 -- Updated AuditLog
 -- Added LegalStatus
+-- Fixed invalid Attribute Types
 -- Updated by Cindy Turner on 10/14/2025
 
 CREATE TABLE Applicant (
@@ -28,13 +29,13 @@ CREATE TABLE Staff (
 
 CREATE TABLE Demographics (
 	UserID               INT             PRIMARY Key,
-	IsDisabled           BOOLEAN,
-	IsVeteran            BOOLEAN,
-	IsChild              BOOLEAN,
-	IsElderly            BOOLEAN,
-	IsPregnant           BOOLEAN,
-	IsTribal             BOOLEAN,
-	IsCaregiver          BOOLEAN,
+	IsDisabled           TINYINT(1),
+	IsVeteran            TINYINT(1),
+	IsChild              TINYINT(1),
+	IsElderly            TINYINT(1),
+	IsPregnant           TINYINT(1),
+	IsTribal             TINYINT(1),
+	IsCaregiver          TINYINT(1),
 	
 	FOREIGN KEY (UserID)         REFERENCES Applicant(UserID)
 );
@@ -46,7 +47,7 @@ CREATE TABLE Employment (
 	EmployerName         VARCHAR(100),
 	HoursPerWeek         INT,
 	DateVerified         DATE,
-	IsRecurringVerify    BOOLEAN,
+	IsRecurringVerify    TINYINT(1),
 	
 	FOREIGN KEY (UserID)           REFERENCES Applicant(UserID)
 );
@@ -82,9 +83,9 @@ CREATE TABLE Application (
 CREATE TABLE RequiredDocuments (
 	DocID                INT             PRIMARY KEY,
 	DocName              VARCHAR(100),
-	IsRecurring          BOOLEAN,
-	AppliesTo            ENUM,
-	SecurityLevel        ENUM,
+	IsRecurring          TINYINT(1),
+	AppliesTo            VARCHAR(50),
+	SecurityLevel        VARCHAR(50),
 	Description          TEXT
 ):
 
@@ -93,7 +94,7 @@ CREATE TABLE SubmittedDocuments (
 	ApplicationID        INT,
 	DocID                INT,
 	DateSubmitted        DATE,
-	IsVerified           BOOLEAN,
+	IsVerified           TINYINT(1),
 	VerifiedBy           INT,
 	LastReviewed         DATE,
 	
@@ -108,7 +109,7 @@ CREATE TABLE AuditLog (
 	StaffID              INT,
 	ChangeDate           DATE,
 	Description          TEXT,
-	ActionType           ENUM,
+	ActionType           VARCHAR(50),
 	
 	FOREIGN KEY (ApplicationID)    REFERENCES Application(ApplicationID),
 	FOREIGN KEY (StaffID)          REFERENCES Staff(StaffID)
