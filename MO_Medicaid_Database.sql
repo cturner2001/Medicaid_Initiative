@@ -29,13 +29,13 @@ CREATE TABLE Staff (
 
 CREATE TABLE Demographics (
 	UserID               INT             PRIMARY Key,
-	IsDisabled           TINYINT(1),
-	IsVeteran            TINYINT(1),
-	IsChild              TINYINT(1),
-	IsElderly            TINYINT(1),
-	IsPregnant           TINYINT(1),
-	IsTribal             TINYINT(1),
-	IsCaregiver          TINYINT(1),
+	IsDisabled           SMALLINT,
+	IsVeteran            SMALLINT,
+	IsChild              SMALLINT,
+	IsElderly            SMALLINT,
+	IsPregnant           SMALLINT,
+	IsTribal             SMALLINT,
+	IsCaregiver          SMALLINT,
 	
 	FOREIGN KEY (UserID)         REFERENCES Applicant(UserID)
 );
@@ -47,7 +47,7 @@ CREATE TABLE Employment (
 	EmployerName         VARCHAR(100),
 	HoursPerWeek         INT,
 	DateVerified         DATE,
-	IsRecurringVerify    TINYINT(1),
+	IsRecurringVerify    SMALLINT,
 	
 	FOREIGN KEY (UserID)           REFERENCES Applicant(UserID)
 );
@@ -83,7 +83,7 @@ CREATE TABLE Application (
 CREATE TABLE RequiredDocuments (
 	DocID                INT             PRIMARY KEY,
 	DocName              VARCHAR(100),
-	IsRecurring          TINYINT(1),
+	IsRecurring          SMALLINT,
 	AppliesTo            VARCHAR(50),
 	SecurityLevel        VARCHAR(50),
 	Description          TEXT
@@ -94,7 +94,7 @@ CREATE TABLE SubmittedDocuments (
 	ApplicationID        INT,
 	DocID                INT,
 	DateSubmitted        DATE,
-	IsVerified           TINYINT(1),
+	IsVerified           SMALLINT,
 	VerifiedBy           INT,
 	LastReviewed         DATE,
 	
