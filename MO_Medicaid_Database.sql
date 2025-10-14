@@ -16,7 +16,7 @@ CREATE TABLE Applicant (
 	City                 VARCHAR(50),
 	USState              VARCHAR(50),
 	ZipCode              VARCHAR(10),
-	MOCounty             VARCHAR(30)
+	MOCounty             VARCHAR(30),
 );
 
 CREATE TABLE Staff (
