@@ -87,7 +87,7 @@ CREATE TABLE RequiredDocuments (
 	AppliesTo            VARCHAR(50),
 	SecurityLevel        VARCHAR(50),
 	Description          TEXT
-):
+);
 
 CREATE TABLE SubmittedDocuments (
 	SubmissionID         INT             PRIMARY KEY,
