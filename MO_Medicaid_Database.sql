@@ -1,15 +1,22 @@
+-- Updated Applicant
+-- Updated Employment
+-- Updated Application
+-- Updated RequiredDocuments
+-- Updated SumbittedDocuments
+-- Updated AuditLog
+-- Added LegalStatus
+-- Updated by Cindy Turner on 10/14/2025
+
 CREATE TABLE Applicant (
 	UserID               INT             PRIMARY Key,
 	FirstName            VARCHAR(50),
 	LastName             VARCHAR(50),
 	DateOfBirth          DATE,
-	SSN                  VARCHAR(11),
 	Address              VARCHAR(100),
 	City                 VARCHAR(50),
 	USState              VARCHAR(50),
 	ZipCode              VARCHAR(10),
 	MOCounty             VARCHAR(30),
-	MedicaidNumber       VARCHAR(20)
 );
 
 CREATE TABLE Staff (
@@ -39,6 +46,7 @@ CREATE TABLE Employment (
 	EmployerName         VARCHAR(100),
 	HoursPerWeek         INT,
 	DateVerified         DATE,
+	IsRecurringVerify    BOOLEAN,
 	
 	FOREIGN KEY (UserID)           REFERENCES Applicant(UserID)
 );
@@ -64,6 +72,8 @@ CREATE TABLE Application (
 	SubmissionDate       DATETIME,
 	Status               VARCHAR(20),
 	CaseWorkerID         INT,
+	MedicaidNumber       VARCHAR(20),
+	VerifyDueDate        DATE,
 	
 	FOREIGN KEY (UserID)           REFERENCES Applicant(UserID),
 	FOREIGN KEY (CaseWorkerID)     REFERENCES Staff(StaffID),
@@ -72,6 +82,9 @@ CREATE TABLE Application (
 CREATE TABLE RequiredDocuments (
 	DocID                INT             PRIMARY KEY,
 	DocName              VARCHAR(100),
+	IsRecurring          BOOLEAN,
+	AppliesTo            ENUM,
+	SecurityLevel        ENUM,
 	Description          TEXT
 ):
 
@@ -79,11 +92,14 @@ CREATE TABLE SubmittedDocuments (
 	SubmissionID         INT             PRIMARY KEY,
 	ApplicationID        INT,
 	DocID                INT,
-	SateSubmitted        DATE,
+	DateSubmitted        DATE,
 	IsVerified           BOOLEAN,
+	VerifiedBy           INT,
+	LastReviewed         DATE,
 	
 	FOREIGN KEY (ApplicationID)    REFERENCES Application(ApplicationID),
-	FOREIGN KEY (DocID)            REFERENCES RequiredDocuments(DocID)
+	FOREIGN KEY (DocID)            REFERENCES RequiredDocuments(DocID),
+	FOREIGN Key (VerifiedBy)       REFERENCES Staff(StaffID)
 );
 
 CREATE TABLE AuditLog (
@@ -92,6 +108,17 @@ CREATE TABLE AuditLog (
 	StaffID              INT,
 	ChangeDate           DATE,
 	Description          TEXT,
+	ActionType           ENUM,
+	
 	FOREIGN KEY (ApplicationID)    REFERENCES Application(ApplicationID),
 	FOREIGN KEY (StaffID)          REFERENCES Staff(StaffID)
+);
+
+CREATE TABLE LegalStatus (
+	UserID               INT             PRIMARY KEY,
+	CitizenshipStatus    VARCHAR(30),
+	LegalIDType          VARCHAR(50),
+	LegalIDNumber        VARCHAR(50),
+	
+	FOREIGN KEY (UserID)           REFERENCES Applicant(UserID)
 );
